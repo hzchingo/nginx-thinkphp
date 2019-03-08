@@ -30,7 +30,7 @@ services:
     restart: always
     networks: 
      - project-network
-  agent-php:
+  project-php:
     container_name: project-php
     image: "chingo/php72-fpm"
     volumes:
