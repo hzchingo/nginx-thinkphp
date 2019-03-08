@@ -5,4 +5,6 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.vh.thinkphp.conf  /etc/nginx/conf.d/default.template
 RUN envsubst \$PHP_FPM_HOST < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ['/entrypoint.sh']
+CMD ["run"]
