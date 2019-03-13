@@ -1,8 +1,10 @@
-#!/bin/sh
+#!usr/bin/env sh
 
 set -e
-envsubst \$PHP_FPM_HOST < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf
+sh ./nginx-config.sh > /etc/nginx/conf.d/default.conf
 
 if [ "$1" = 'run' ]; then
-    nginx -g "daemon off;"
+    exec $(which nginx) -g "daemon off;"
+else
+    exec "$@"
 fi
