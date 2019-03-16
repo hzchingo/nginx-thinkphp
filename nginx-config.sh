@@ -6,7 +6,7 @@ gen_location()
     context=$2
     path=$3
     host=$4
-   
+
     gen_${type}_location $context $path $host
 }
 
@@ -53,6 +53,13 @@ gen_thinkphp_location()
     location=$1
     destination=$2
     host=$3
+
+    if [ "$location" = "/" ]; then
+        location1=""
+    else
+        location1=$location
+    fi
+
     cat <<EOF
     location $location {
         alias $destination;
@@ -67,17 +74,17 @@ gen_thinkphp_location()
         }
     }
     location @thinkphp$context_index {
-        rewrite $location/(.*)\$ $location/index.php?s=/\$1 last;
+        rewrite $location1/(.*)\$ $location1/index.php?s=/\$1 last;
     }
 EOF
 }
 
 cat  <<EOF
+    log_format main1 "\$request_filename - fastcgi_script_filename";
 server {
     listen 80 default_server;
-    server_name _;
     error_log /var/log/nginx/error.log;
-    access_log /var/log/nginx/access.log;
+    access_log /var/log/nginx/access.log main1;
 
 EOF
 
