@@ -80,11 +80,10 @@ EOF
 }
 
 cat  <<EOF
-    log_format main1 "\$request_filename - fastcgi_script_filename";
 server {
     listen 80 default_server;
     error_log /var/log/nginx/error.log;
-    access_log /var/log/nginx/access.log main1;
+    access_log /var/log/nginx/access.log;
 
 EOF
 
